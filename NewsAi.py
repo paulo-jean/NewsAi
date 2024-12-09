@@ -22,12 +22,10 @@ ddg_timao = DuckDuckGoSearchResults(api_wrapper=api_timao, num_results=4)
 #print(p_ia)
 
 #for m in genai.list_models():print(m)
-gmodel = ChatGoogleGenerativeAI(model='models/gemini-1.0-pro', api_key='AIzaSyCvQ-H2J72SEtJO9I-QSu-jGUAAsIHccJ4')
-headers = {'USER_AGENT':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'}
+gmodel = ChatGoogleGenerativeAI(model='models/gemini-1.0-pro', api_key='MY_KEY')
+headers = {MY_HEADERS}
 data_hoje = datetime.today().date()
-llm = ChatGroq(model='llama-3.1-70b-versatile', api_key='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', verbose=True)
-#llm = ChatGroq(model='llama-3.1-8b-instant', api_key='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', verbose=True)
-    
+llm = ChatGroq(model='llama-3.1-70b-versatile', api_key='MY_KEY', verbose=True)
 
 def enviar_email(texto):
     # criar a integração com o outlook
@@ -37,80 +35,14 @@ def enviar_email(texto):
     email = outlook.CreateItem(0)
 
     # configurar as informações do seu e-mail
-    email.To = "machado.jeanpaulo@gmail.com"
+    email.To = "myemail@my.com"
     email.Subject = "News de hoje!"
     email.HTMLBody = texto
-    # f"""
-    # <p>Eaí JP, aqui é o Jean</p>
-
-    # <p>Atenciosamente,</p>
-    # <p>Jean Paulo</p>
-    # """
-
-    # anexo = r"C:\Users\jmachado\Desktop\llm\AutoEmail.py"
-    # email.Attachments.Add(anexo)
-
     email.Send()
     welldone = "Email Enviado"
     return welldone
 
-# def criar_conteudo_v1():
-#     '''Função responsável por criar a notícia extraindo os conteúdos da web setados
-#     e passando-os para o llm elaborar'''
-#     #cnn
-#     url_cnn = 'https://www.cnnbrasil.com.br/tudo-sobre/inteligencia-artificial/'
-#     cnn = requests.get(url_cnn, headers=headers)
-#     soup = BeautifulSoup(cnn.content, 'html.parser')
-#     cnn_noticias = soup.find_all('a', class_="home__list__tag")
-#     cnn_texto = [texto.find('h3', class_='news-item-header__title').text.strip() for texto in cnn_noticias] #soup.get_text()
-#     cnn_urls = [u['href'] for u in cnn_noticias if u['href']]
-#     cnn_img_urls = [u.find('img')['src'] for u in cnn_noticias if u.find('img')['src']]
-    
-#     #blog
-#     url_blog = 'https://iaexpert.academy/blog/'
-#     blog = requests.get(url_blog, headers=headers)
-#     blog_soup = BeautifulSoup(blog.content, 'html.parser')
-#     blog_texto = blog_soup.get_text()
-#     blog_noticias = blog_soup.find_all("h2")
-#     blog_urls = []
-#     for url in blog_noticias:
-#         blog_urls.append(url.a)
-
-   
-#     #llm = ChatGroq(model='llama-3.1-70b-versatile', api_key='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', verbose=True)
-#     #{context_cnn} {urls_cnn} \ {context_blog} {urls_blog}
-#     template = '''
-#     você é um escritor de notícias responsável por extrair as últimas notícias mais recentes sobre Inteligência Artificial.
-#     Utilize os conteúdos fornecidos como contexto: {context} {urls} {img}
-
-#     Sua tarefa é extrair 3 notícias e elaborar um resumo de cada notícia com sua imagem e sua respectiva url.
-#     Coloque sua resposta no estilo de uma Newsletter seguindo o modelo abaixo:
-
-#     [título da notícia]\n
-#     [imagem]\n
-#     [resumo da notícia]\n
-#     [link da notícia]\n
-    
-#     *obervação_1 -> Utilize o seguinte texto para iniciar a Newsletter:
-
-#     "Olá, leitores! 📰
-
-#     Sejam bem-vindos à nossa newsletter sobre Inteligência Artificial 👨‍💻🤖\n
-#     Reunimos alguns artigos relevantes para você se manter atualizado sobre o universo da IA."
-
-#     *observação_2 -> O formato de saída final deve ser em: <!DOCTYPE html>
-#     '''
-#     #{context_cnn} Formate sua resposta final em Markdown no estilo de uma newsletter
-
-#     prompt = ChatPromptTemplate.from_template(template)
-
-#     chain = prompt | llm | StrOutputParser()
-
-#     resultado_texto = chain.invoke({'context': cnn_texto, 'urls': cnn_urls, 'img': cnn_img_urls})
-#     #resultado_texto = chain.invoke({'context': contextos})
-#     return resultado_texto
-
-def cnn_newsletter_v2():
+def cnn_newsletter():
     '''Função responsável por criar a notícia extraindo os conteúdos da web setados
     e passando-os para o llm elaborar'''
     #cnn
@@ -154,7 +86,7 @@ def cnn_newsletter_v2():
     resultado_texto = chain.invoke({"data":data_hoje, "context":lista_cnn})
     return resultado_texto
 
-def corinthians_newsletter_v2():
+def corinthians_newsletter():
     '''Função responsável por criar a notícia extraindo os conteúdos da web setados
     e passando-os para o llm elaborar'''
     # Corinthians
@@ -168,8 +100,6 @@ def corinthians_newsletter_v2():
         lista_corinthians.append(t)
         lista_corinthians.append(i)
         lista_corinthians.append(l)
-   
-    #llm = ChatGroq(model='llama-3.1-70b-versatile', api_key='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', verbose=True)
     
     template = '''
     você é um agente Jornalista e Escritor.
@@ -214,14 +144,11 @@ def converter_html(news):
     resultado_final = chain_html.invoke({'noticias':news})
     return resultado_final
 
-# #print(criar_conteudo())
+noticias = [cnn_newsletter(), corinthians_newsletter()]
+#print(converter_html(noticias))
+enviar_email(converter_html(noticias))
 
-# news = criar_newsletter_v2()
-# news_html = converter_html(news)
-
-#print(enviar_email(news_html))  Utilize os conteúdos fornecidos como contexto: {context} e elaborar um resumo de cada notícia com sua imagem e sua respectiva url.
-
-#version 3
+#version 2
 def criar():
     template = '''
     você é um escritor de notícias responsável por escrever um resumo das notícias recebidas como contexto: {context1} | {context2} | {context3}
@@ -251,8 +178,5 @@ def criar():
     #resultado_texto = chain.invoke({'context': contextos})
     return resultado
 
-noticias = [cnn_newsletter_v2(), corinthians_newsletter_v2()]
-#print(converter_html(noticias))
-enviar_email(converter_html(noticias))
-
+# version 2
 #enviar_email(criar())
