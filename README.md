@@ -5,9 +5,10 @@ Este projeto Python gera uma newsletter personalizada com notícias sobre Inteli
 
 ## Como Funciona
 
-O script usa web scraping para extrair notícias de sites predefinidos que o usuário gosta de ler e acompanhar. Em seguida, utiliza LLMs (atualmente, Gemini e um modelo Groq) para resumir as notícias e formatá-las como uma newsletter em HTML. Por fim, envia a newsletter por email usando o Outlook (podendo ser configurado para usar com o gmail, alterando a biblioteca e fazendo outros ajustes na parte do envio de email).
+O script possuí dois modos de coleta de informações, na versão 1 usa técnica de web scraping para extrair notícias de sites predefinidos que o usuário gosta de ler e acompanhar. Em seguida, utiliza LLMs (atualmente, Gemini e um modelo Groq) para resumir as notícias e formatá-las como uma newsletter em HTML. Por fim, envia a newsletter por email usando o Outlook (podendo ser configurado para usar com o gmail, alterando a biblioteca e fazendo outros ajustes na parte do envio de email).
+Na versão 2, invés do web scraping, utiliza-se a API do DuckDuckGo (um motor de buscas na internet) para pesquisar por notícias recentes sobre o assunto predefinido e depois passar para os LLMs.
 
-⚠️ Obs* Use o script com moderação e lembre-se que fazer scraping de sites que não autorizam a divulgação dos conteúdos ou comercialização dos mesmos pode gerar processos judiciais para quem o pratica. No meu caso, é para uso pessoal, por isso chamo o scrip de Newsletter Pessoal. É como se eu estivesse indo todo dia como de costume ao site e consumir as notícias daquele dia, porém de forma automatizada. Por fim, sempre leia os termos de cada site para saber o que pode ou não ser feito 😉
+⚠️ Obs* Use o script da versão 1 com moderação e lembre-se que fazer scraping de sites que não autorizam a divulgação dos conteúdos ou comercialização dos mesmos pode gerar processos judiciais para quem o pratica. No meu caso, é para uso pessoal, por isso chamo o scrip de Newsletter Pessoal. É como se eu estivesse indo todo dia como de costume ao site e consumir as notícias daquele dia, porém de forma automatizada. Por fim, sempre leia os termos de cada site para saber o que pode ou não ser feito 😉
 
 **Passo a passo:**
 
@@ -25,7 +26,7 @@ O script usa web scraping para extrair notícias de sites predefinidos que o usu
 * **LangChain:** Um framework para desenvolvimento de aplicações com LLMs.
 * **Groq:** Plataforma de LLM.
 * **Google Generative AI:**  Plataforma de LLM (Gemini).
-* **DuckDuckGo Search API:**  Para pesquisa na web (atualmente não está sendo usada ativamente no código, mas importada).
+* **DuckDuckGo Search API:**  Para pesquisa na web.
 * **win32com:** Para interagir com o Outlook.
 * **datetime:** Para obter a data atual.
 
